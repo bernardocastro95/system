@@ -1,10 +1,12 @@
-import firebase from './services/firebaseConnection';
+//import firebase from './services/firebaseConnection';
+import {BrowserRouter} from 'react-router-dom'
+import Routes from './routes'
 
 function App() {
   return (
-    <div>
-      <h1>Test</h1>
-    </div>
+    <BrowserRouter>
+      <Routes/>
+    </BrowserRouter>
   );
 }
 
