@@ -27,10 +27,10 @@ function AuthProvider({children}){
     async function signUp(email, password, name){
         setLoadingAuth(true)
         await firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(async (value)=> {
+        .then(async (value)=>{
             let uid = value.user.uid
 
-            await firebase().firestore().collection('users')
+            await firebase.firestore().collection('users')
             .doc(uid).set({
                 name: name,
                 avatarUrl: null
@@ -53,6 +53,7 @@ function AuthProvider({children}){
             setLoadingAuth(false)
         })
     }
+    
 
     function storageUser(data){
         localStorage.setItem('UserSystem', JSON.stringify(data))
