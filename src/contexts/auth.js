@@ -1,4 +1,5 @@
 import { useState, createContext, useEffect } from "react";
+import { toast } from "react-toastify";
 import firebase from'../services/firebaseConnection'
 
 export const AuthContext = createContext({})
@@ -42,10 +43,12 @@ function AuthProvider({children}){
             setUser(data)
             storageUser(data)
             setLoadingAuth(false)
+            toast.success('Welcome to the platform')
         })
         .catch((error)=>{
             console.log(error)
             setLoadingAuth(false)
+            toast.error('Something went wrong')
         })
     }
 
@@ -71,11 +74,13 @@ function AuthProvider({children}){
                 setUser(data)
                 storageUser(data)
                 setLoadingAuth(false)
+                toast.success('Welcome to the platform')
             })
         })
         .catch((error)=>{
             console.log(error)
             setLoadingAuth(false)
+            toast.error('Something went wrong')
         })
     }
     
