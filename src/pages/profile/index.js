@@ -37,10 +37,10 @@ export default function Profile(){
                         </label>
 
 
-                        <labe>Name</labe>
+                        <label>Name</label>
                         <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
 
-                        <labe>Email</labe>
+                        <label>Email</label>
                         <input type="text" value={email} disabled={true}/>
 
                         <button type="submit">Save</button>
