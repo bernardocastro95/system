@@ -1,9 +1,10 @@
 import './customer.css'
 import Title from '../../components/Title'
 import Header from '../../components/Header'
-
+import firebase from '../../services/firebaseConnection'
 import {FiUser} from 'react-icons/fi'
 import { useState } from 'react'
+import {toast} from 'react-toastify'
 
 export default function Customers(){
 
@@ -11,9 +12,30 @@ export default function Customers(){
     const [registerNumber, setRegisterNumber] = useState('')
     const [address, setAddress] = useState('')
 
-    function handleAddCompany(e){
+    async function handleAddCompany(e){
         e.preventDefault()
-        alert('TEST')
+
+        if(companyName !== '' && registerNumber !== '' && address !== ''){
+            await firebase.firestore().collection('customers')
+            .add({
+                companyName: companyName,
+                registerNumber: registerNumber,
+                address: address
+            })
+            .then(()=>{
+                setCompanyName('')
+                setRegisterNumber('')
+                setAddress('')
+                toast.info('Company added')
+            })
+            .catch(()=>{
+                toast.error('Failed to add company')
+            })
+        }
+        else{
+            toast.error('Please fulfill all fields')
+        }
+        
     }
 
     return(
