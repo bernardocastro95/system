@@ -2,12 +2,12 @@ import {useState} from 'react'
 import Header from '../../components/Header'
 import './dashboard.css'
 import Title from '../../components/Title'
-import {FiMessageSquare, FiPlus} from 'react-icons/fi'
+import {FiMessageSquare, FiPlus, FiSearch, FiEdit2} from 'react-icons/fi'
 import {Link} from 'react-router-dom'
 
 export default function Dashboard() {
 
-    const [calls, setCalls] = useState([])
+    const [calls, setCalls] = useState([1])
 
     return (
       <div>
@@ -19,7 +19,7 @@ export default function Dashboard() {
 
           {calls.length === 0 ? (
                <div className="container dashboard">
-               <span>No call Registered...</span>
+               <span>No Call Registered...</span>
    
                <Link to="/new" className="new ">
                <FiPlus sizer={25} color="#fff"/>
@@ -32,6 +32,37 @@ export default function Dashboard() {
                 <FiPlus sizer={25} color="#fff"/>
                    New Call
                </Link>
+
+               <table>
+                 <thead>
+                   <tr>
+                     <th scope="col">Customer</th>
+                     <th scope="col">Topic</th>
+                     <th scope="col">Status</th>
+                     <th scope="col">Register Date</th>
+                     <th scope="col">#</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                 <tr>
+                   <td data-label="Costumer">Subject</td>
+                   <td data-label="Topic">Support</td>
+                   <td data-label="Status">
+                     <span className="badge" style={{backgroundColor: '#5cb85c'}}>Current</span>
+                   </td>
+                   <td data-label="Registered">12/09/2021</td>
+                   <td data-label="#">
+                     <button className="action" style={{backgroundColor: '#3583f6'}}>
+                       <FiSearch color="#FFF" size={17}/>
+                     </button>
+                     <button className="action" style={{backgroundColor: '#f6a935'}}>
+                       <FiEdit2 color="#FFF" size={17}/>
+                     </button>
+                   </td>
+                 </tr>
+               </tbody>
+              </table>
+               
             </>
           )}
 
