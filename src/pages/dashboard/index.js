@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom'
 
 export default function Dashboard() {
 
-    const [calls, setCalls] = useState([1])
+    const [calls, setCalls] = useState([])
 
     return (
       <div>
