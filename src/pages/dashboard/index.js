@@ -45,7 +45,7 @@ export default function Dashboard() {
                  </thead>
                  <tbody>
                  <tr>
-                   <td data-label="Costumer">Subject</td>
+                   <td data-label="Customer">Subject</td>
                    <td data-label="Topic">Support</td>
                    <td data-label="Status">
                      <span className="badge" style={{backgroundColor: '#5cb85c'}}>Current</span>

@@ -5,6 +5,7 @@ import './new.css'
 import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
 import firebase from '../../services/firebaseConnection'
+import {toast} from 'react-toastify'
 export default function New(){
 
     const [loadCustomer, setLoadCustomers] = useState(true)
@@ -48,9 +49,29 @@ export default function New(){
         loadCustomers()
     }, [])
 
-    function handleRegister(e){
+    async function handleRegister(e){
         e.preventDefault()
-        alert('TEST')
+        
+        await firebase.firestore().collection('calls')
+        .add({
+            created: new Date(),
+            customer: customers[customerSelected].companyName,
+            customerId: customers[customerSelected].id,
+            topic: topic,
+            status: status,
+            addOn: addOn,
+            userId: user.uid
+        })
+        .then(() => {
+            toast.success('Call Registered')
+            setAddOn('')
+            setCustomerSelected(0)
+            
+        })
+        .catch((err) => {
+            toast.error('Error on registering call. Try again later !')
+            console.log(err)
+        })
     }
 
     function handleChangeSelect(e){
