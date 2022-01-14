@@ -6,6 +6,7 @@ import {FiMessageSquare, FiPlus, FiSearch, FiEdit2} from 'react-icons/fi'
 import {Link} from 'react-router-dom'
 import firebase from '../../services/firebaseConnection'
 import {format} from 'date-fns'
+import Extension from '../../components/Extension'
 
 
 const listRef = firebase.firestore().collection('calls', 'desc').orderBy('created')
@@ -16,6 +17,8 @@ export default function Dashboard() {
     const [loadingMore, setLoadingMore] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
     const [lastDocs, setLastDocs] = useState()
+    const [showPostExtension, setShowPostExtensio] = useState(false)
+    const [details, setDetails] = useState()
 
     useEffect(() => {
 
@@ -80,6 +83,11 @@ export default function Dashboard() {
 
     }
 
+    function togglePostExtension(item){
+      setShowPostExtensio(!showPostExtension)
+      setDetails(item)
+    }
+
     if(load){
       return(
         <div>
@@ -142,7 +150,7 @@ export default function Dashboard() {
                       </td>
                       <td data-label="Registered">{item.createdFormat}</td>
                       <td data-label="#">
-                        <button className="action" style={{backgroundColor: '#3583f6'}}>
+                        <button className="action" style={{backgroundColor: '#3583f6'}} onClick={() => togglePostExtension(item)}>
                           <FiSearch color="#FFF" size={17}/>
                         </button>
                         <button className="action" style={{backgroundColor: '#f6a935'}}>
@@ -162,6 +170,13 @@ export default function Dashboard() {
 
        
         </div>
+
+        {showPostExtension && (
+          <Extension
+            content={details}
+            close={togglePostExtension}
+          />
+        )}
         
       </div>
     );
