@@ -14,22 +14,22 @@ export default function Extension({content, close}){
                     <h2>Call Details</h2>
                     <div className='row'>
                         <span>
-                            Customer: <a>{content.customer}</a>
+                            Customer: <i>{content.customer}</i>
                         </span>
                     </div>
                     <div className='row'>
                         <span>
-                            Topic: <a>{content.topic}</a>
+                            Topic: <i>{content.topic}</i>
                         </span>
                     </div>
                     <div className='row'>
                         <span>
-                            Registered: <a>{content.createdFormated}</a>
+                            Registered: <i>{content.createdFormated}</i>
                         </span>
                     </div>
                     <div className='row'>
                         <span>
-                            Status: <a style={{color: "#FFF", backgroundColor: content.status === 'Open' ? '#5cb85c' : '#999'}}>{content.status}</a>
+                            Status: <i style={{color: "#FFF", backgroundColor: content.status === 'Open' ? '#5cb85c' : '#999'}}>{content.status}</i>
                         </span>
                     </div>
 

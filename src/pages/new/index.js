@@ -6,8 +6,11 @@ import { useState, useEffect, useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
 import firebase from '../../services/firebaseConnection'
 import {toast} from 'react-toastify'
+import { useHistory, useParams } from 'react-router-dom'
 export default function New(){
 
+    const {id} = useParams()
+    const history = useHistory()
     const [loadCustomer, setLoadCustomers] = useState(true)
     const [customers, setCustomers] = useState([])
     const [customerSelected, setCustomerSelected] = useState(0)
@@ -16,6 +19,7 @@ export default function New(){
     const [status, setStatus] = useState('open')
     const [addOn, setAddOn] = useState('')
     const {user} = useContext(AuthContext)
+    const [idCustomer, setIdCustomer] = useState(false)
 
     useEffect(()=> {
         async function loadCustomers(){
@@ -39,6 +43,10 @@ export default function New(){
                 }
                 setCustomers(list)
                 setLoadCustomers(false)
+
+                if(id){
+                    loadId(list) 
+                }
             })
             .catch((error)=>{
                 console.log('Error')
@@ -47,10 +55,54 @@ export default function New(){
             })
         }
         loadCustomers()
-    }, [])
+    }, [id, loadId])
+
+    async function loadId(list){
+        await firebase.firestore().collection('calls').doc(id)
+        .get()
+        .then((snapshot) => {
+            setTopic(snapshot.data().topic)
+            setStatus(snapshot.data().status)
+            setAddOn(snapshot.data().addOn)
+
+            let index = list.findIndex(item => item.id === snapshot.data().customerId)
+            setCustomerSelected(index)
+            setIdCustomer(true)
+
+        })
+        .catch((err)=>{
+            console.log('Error on id: ' + err)
+            setIdCustomer(false)
+        })
+    }
 
     async function handleRegister(e){
+
         e.preventDefault()
+
+        if(idCustomer){
+            await firebase.firestore().collection('calls').doc(id)
+            .update({
+                customer: customers[customerSelected].companyName,
+                customerId: customers[customerSelected].id,
+                topic: topic,
+                status: status,
+                addOn: addOn,
+                userId: user.uid
+            })
+            .then(()=> {
+                toast.success('Call Edited')
+                setCustomerSelected(0)
+                setAddOn('')
+                history.push('/dashboard')
+            })
+            .catch((err) => {
+                toast.error('Error on Update. Try again later')
+                console.log(err)
+            })
+
+            return
+        }
         
         await firebase.firestore().collection('calls')
         .add({
