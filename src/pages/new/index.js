@@ -61,9 +61,6 @@ export default function New(){
         await firebase.firestore().collection('calls').doc(id)
         .get()
         .then((snapshot) => {
-            setTopic(snapshot.data().topic)
-            setStatus(snapshot.data().status)
-            setAddOn(snapshot.data().addOn)
 
             let index = list.findIndex(item => item.id === snapshot.data().customerId)
             setCustomerSelected(index)
